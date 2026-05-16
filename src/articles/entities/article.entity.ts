@@ -10,4 +10,7 @@ export class Article {
 
   @Column({ nullable: false })
   content!: string;
+
+  @Column({ nullable: false })
+  authorId!: number;
 }

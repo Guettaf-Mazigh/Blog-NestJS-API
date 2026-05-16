@@ -16,11 +16,13 @@ describe('AppController (e2e)', () => {
     await app.init();
   });
 
-  it('/ (GET)', () => {
+  it('/articles (GET)', () => {
     return request(app.getHttpServer())
-      .get('/')
+      .get('/articles')
       .expect(200)
-      .expect('Hello World!');
+      .expect((res) => {
+        if (!Array.isArray(res.body)) throw new Error('Expected an array');
+      });
   });
 
   afterEach(async () => {

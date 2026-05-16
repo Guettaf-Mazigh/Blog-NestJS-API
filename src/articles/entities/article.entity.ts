@@ -1,6 +1,6 @@
-import { Column } from 'typeorm/browser/decorator/columns/Column.js';
-import { PrimaryGeneratedColumn } from 'typeorm/browser/decorator/columns/PrimaryGeneratedColumn.js';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
+@Entity()
 export class Article {
   @PrimaryGeneratedColumn()
   id!: number;

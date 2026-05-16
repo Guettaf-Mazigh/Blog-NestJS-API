@@ -15,6 +15,6 @@ export class User {
   @Column({ nullable: false })
   password!: string;
 
-  @OneToMany(() => Article, (article) => article.authorId) 
+  @OneToMany(() => Article, (article) => article.author)
   articles!: Article[];
 }

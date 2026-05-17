@@ -1,12 +1,15 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
-
-  constructor(private readonly usersRepository: Repository<User>) {}
+  constructor(
+    @InjectRepository(User)
+    private readonly usersRepository: Repository<User>,
+  ) {}
 
   findAll() {
     return this.usersRepository.find();
@@ -14,7 +17,7 @@ export class UsersService {
 
   findOne(id: number) {
     const user = this.usersRepository.findOneBy({ id });
-    if(!user) {
+    if (!user) {
       throw new NotFoundException(`User ${id} not found`);
     }
     return user;
@@ -25,15 +28,15 @@ export class UsersService {
       id,
       ...updateUserDto,
     });
-    if(!user) {
+    if (!user) {
       throw new NotFoundException(`User ${id} not found`);
     }
     return this.usersRepository.save(user);
   }
 
   async remove(id: number) {
-    const result = await this.usersRepository.delete(id); 
-    if(result.affected === 0) {
+    const result = await this.usersRepository.delete(id);
+    if (result.affected === 0) {
       throw new NotFoundException(`User ${id} not found`);
     }
     return { deleted: true };

@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { User } from 'src/users/entities/user.entity';
+import { Column, Entity, ManyToOne, JoinColumn, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Article {
@@ -10,4 +11,11 @@ export class Article {
 
   @Column({ nullable: false })
   content!: string;
+
+  @Column()
+  authorId!: number;
+
+  @ManyToOne(() => User, (user) => user.articles, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'authorId' })
+  author!: User;
 }
